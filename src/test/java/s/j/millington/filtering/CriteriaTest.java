@@ -39,7 +39,7 @@ public class CriteriaTest {
         person6);
 
   }
-
+  
   @Test
   public void given3Males_whenMaleCriteriaCalled_check3MalesReturned() {
 
