@@ -3,6 +3,7 @@ package s.j.millington.filtering;
 import org.junit.Before;
 import org.junit.Test;
 import s.j.millington.common.Person;
+import s.j.millington.predicates.PersonPredicates;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,18 +19,18 @@ public class CriteriaTest {
   private Person person5 = new Person("H", "Male", Person.MaritalStatus.Married);
   private Person person6 = new Person("D", "Female", Person.MaritalStatus.Single);
 
-  private CriteriaMale criteriaMale;
-  private CriteriaMarried criteriaMarried;
+  private PredicateCriteria predicateCriteria;
+  private PredicateCriteria criteriaMarried;
   private CriteriaAndUnbounded criteriaAndUnbounded;
 
   private List<Person> allPersons;
 
   @Before
   public void setUp() throws Exception {
-    criteriaMale = new CriteriaMale();
-    criteriaMarried = new CriteriaMarried();
+    predicateCriteria = new PredicateCriteria<Person>(PersonPredicates.isMalePredicate());
+    criteriaMarried = new PredicateCriteria<Person>(PersonPredicates.isMarriedPredicate());
 
-    criteriaAndUnbounded = new CriteriaAndUnbounded(Arrays.asList(criteriaMale, criteriaMarried));
+    criteriaAndUnbounded = new CriteriaAndUnbounded(Arrays.asList(PersonPredicates.isMalePredicate(), PersonPredicates.isMarriedPredicate()));
 
     allPersons = Arrays.asList(person1,
         person2,
@@ -43,7 +44,7 @@ public class CriteriaTest {
   @Test
   public void given3Males_whenMaleCriteriaCalled_check3MalesReturned() {
 
-    List<Person> allMales = criteriaMale.meetCriteria(allPersons);
+    List<Person> allMales = predicateCriteria.meetCriteria(allPersons);
 
     assertEquals(3L, allMales.size());
 
